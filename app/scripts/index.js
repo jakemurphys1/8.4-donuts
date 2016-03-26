@@ -5,6 +5,7 @@ var ReactDOM=require("react-dom");
 var HomeForm=require("./components/home.jsx")
 var MakerForm=require("./components/maker.jsx")
 var SignupForm=require("./components/signin.jsx")
+var ReviewForm=require("./components/review.jsx")
 var Parse = require("parse")
 
 //local
@@ -18,6 +19,7 @@ var RecipeRouter = Backbone.Router.extend({
     "home":"home",
     "addRecipe":"addRecipe",
     "Login":"Login",
+    "Review":"Review"
   },
   home:function(){
 ReactDOM.render(<HomeForm collection={myCollection} router={this} />,document.getElementById("itemList"))
@@ -27,6 +29,9 @@ ReactDOM.render(<MakerForm collection={myCollection} router={this}/>,document.ge
   },
   Login:function(){
 ReactDOM.render(<SignupForm collection={myCollection} router={this}/>,document.getElementById("itemList"))
+  },
+  Review:function(){
+    ReactDOM.render(<ReviewForm collection={myCollection} router={this}/>,document.getElementById("itemList"))
   },
 })
 
@@ -39,6 +44,9 @@ $("#headerPlus").click(function(){
 })
 
 $("#headerUser").click(function(){
-  console.log("user")
     router.navigate("Login",{trigger:true})
+});
+
+$("#SBmyRecipes").click(function(){
+  router.navigate("home",{trigger:true})
 })

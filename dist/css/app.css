@@ -5846,10 +5846,15 @@ img {
   .Total .item {
     background-color: #e6e6e6;
     border: black 1px solid;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     display: inline-block;
     margin-left: 20px; }
+    .Total .item h2 {
+      font-size: 15px;
+      text-align: center;
+      position: relative;
+      word-wrap: break-word; }
   .Total .right {
     float: right; }
   .Total .recipeHead {
@@ -5874,7 +5879,15 @@ img {
   .info #Description {
     width: 100%;
     height: 200px; }
+  .info #PersonalNotes {
+    width: 100%;
+    height: 200px; }
   .info #Save {
+    margin-top: 30px;
+    width: 140px;
+    height: 30px;
+    float: right; }
+  .info #NextStep {
     width: 140px;
     height: 30px;
     float: right; }
@@ -5884,5 +5897,40 @@ img {
 .TotalSignup .form-login {
   display: inline-block;
   margin: 0 auto; }
+
+.review .heading h1, .review .heading p {
+  text-align: center; }
+.review .quantity {
+  background-color: whitesmoke;
+  margin-top: 30px; }
+  .review .quantity span {
+    font-size: 20px; }
+  .review .quantity button {
+    float: right; }
+  .review .quantity .ingredients {
+    text-align: center; }
+
+.reviewInfo {
+  border: gray 1px solid;
+  text-align: center; }
+  .reviewInfo span {
+    color: gray; }
+  .reviewInfo p {
+    font-size: 30px; }
+
+.steps {
+  margin-top: 30px;
+  text-align: center; }
+  .steps .ingreItem {
+    border-bottom: gray solid 1px;
+    border-left: gray solid 1px; }
+  .steps .ingreQty {
+    border-bottom: gray solid 1px;
+    border-right: gray solid 1px; }
+
+.personal {
+  margin-top: 30px; }
+  .personal .text {
+    border: black solid 1px; }
 
 /*# sourceMappingURL=app.css.map */
