@@ -5905,7 +5905,7 @@ img {
   margin-top: 30px; }
   .review .quantity span {
     font-size: 20px; }
-  .review .quantity button {
+  .review .quantity .floatright {
     float: right; }
   .review .quantity .ingredients {
     text-align: center; }
@@ -5927,6 +5927,12 @@ img {
   .steps .ingreQty {
     border-bottom: gray solid 1px;
     border-right: gray solid 1px; }
+  .steps .TotalStep {
+    border: solid black 1px;
+    margin-top: 10px; }
+    .steps .TotalStep .ingreDescription {
+      border: solid whitesmoke 1px;
+      background-color: whitesmoke; }
 
 .personal {
   margin-top: 30px; }

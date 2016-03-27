@@ -144,7 +144,7 @@ margin: 0 auto;
     span{
       font-size: 20px;
     }
-    button{
+    .floatright{
       float:right;
     }
     .ingredients{
@@ -175,6 +175,15 @@ margin: 0 auto;
     border-bottom: gray solid 1px;
     border-right: gray solid 1px;
   }
+  .TotalStep{
+    border:solid black 1px;
+    margin-top: 10px;
+    .ingreDescription{
+        border:solid rgb(245, 245, 245) 1px;
+        background-color: rgb(245, 245, 245);
+    }
+  }
+
 }
 
 .personal{

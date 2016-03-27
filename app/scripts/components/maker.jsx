@@ -84,12 +84,15 @@ var Maker = React.createClass({
       var Steps = Parse.Object.extend("Steps");
       var steps = new Steps();
       stepList.RecipeID=object.id;
+      localStorage.setItem("CurrentId",object.id)
       for(var i =0;i<this.state.allSteps.length;i++){
 
-        var Ingredient = Parse.Object.extend("Ingredients");
-        var ingredient = new Ingredient();
+
 
         for(var j = 0;j<this.state.allSteps[i].ingredients.length;j++){
+          console.log("check")
+          var Ingredient = Parse.Object.extend("Ingredients");
+          var ingredient = new Ingredient();
             var ingrdata ={
               "Name":this.state.allSteps[i].ingredients[j].Ingredient,
               "Amount":this.state.allSteps[i].ingredients[j].Amount,
@@ -109,10 +112,13 @@ var Maker = React.createClass({
       console.log("stepList",stepList)
 
       steps.save(stepList).then(function(object){
-
+  Backbone.history.navigate("Review",{trigger:true})
       })
 
+
   }.bind(this));
+
+
   },
   handleNewStep:function(){
     var allIngredients=[];

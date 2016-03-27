@@ -197,12 +197,15 @@ var Maker = React.createClass({displayName: "Maker",
       var Steps = Parse.Object.extend("Steps");
       var steps = new Steps();
       stepList.RecipeID=object.id;
+      localStorage.setItem("CurrentId",object.id)
       for(var i =0;i<this.state.allSteps.length;i++){
 
-        var Ingredient = Parse.Object.extend("Ingredients");
-        var ingredient = new Ingredient();
+
 
         for(var j = 0;j<this.state.allSteps[i].ingredients.length;j++){
+          console.log("check")
+          var Ingredient = Parse.Object.extend("Ingredients");
+          var ingredient = new Ingredient();
             var ingrdata ={
               "Name":this.state.allSteps[i].ingredients[j].Ingredient,
               "Amount":this.state.allSteps[i].ingredients[j].Amount,
@@ -222,10 +225,13 @@ var Maker = React.createClass({displayName: "Maker",
       console.log("stepList",stepList)
 
       steps.save(stepList).then(function(object){
-
+  Backbone.history.navigate("Review",{trigger:true})
       })
 
+
   }.bind(this));
+
+
   },
   handleNewStep:function(){
     var allIngredients=[];
@@ -315,38 +321,96 @@ var Parse = require("parse")
 
 
 var Review = React.createClass({displayName: "Review",
-  getInitialState:function(){
+getInitialState:function(){
   return {
-    "properties": {}
+    "properties": {},
+    "steps":[],
+    "Ingre":[],
   }
 },
 componentDidMount(){
   Parse.initialize("jakeappid");
-Parse.serverURL = 'http://tiny-jakes.herokuapp.com'
+  Parse.serverURL = 'http://tiny-jakes.herokuapp.com'
 
-var recipe = Parse.Object.extend("Recipes");
+  var recipe = Parse.Object.extend("Recipes");
   var query = new Parse.Query(recipe);
   var tempObject={};
-query.get(localStorage.getItem("CurrentId"),{
-success: function(results) {
-   tempObject = {
-    "Creator":results.get("Creator"),
-    "RecipeName": results.get("RecipeName"),
-    "Type":results.get("Type"),
-    "PrepTime":results.get("PrepTime"),
-    "CookTime":results.get("CookTime"),
-    "CookTemp":results.get("CookTemp"),
-    "Quantity":results.get("Quantity"),
-    "QuantityType":results.get("QuantityType"),
-  };
+  query.get(localStorage.getItem("CurrentId"),{
+    success: function(results) {
+     tempObject = {
+      "Creator":results.get("Creator"),
+      "RecipeName": results.get("RecipeName"),
+      "Type":results.get("Type"),
+      "PrepTime":results.get("PrepTime"),
+      "CookTime":results.get("CookTime"),
+      "CookTemp":results.get("CookTemp"),
+      "Quantity":results.get("Quantity"),
+      "QuantityType":results.get("QuantityType"),
+      "PersonalNotes":results.get("PersonalNotes"),
+    };
+    },
+    error: function(error) {
+      console.log("Server not find")
+    }
+    }).done(function(){
+      this.setState({"properties":tempObject});
+     }.bind(this));
+
+  var Step = Parse.Object.extend("Steps");
+  var stepQuery = new Parse.Query(Step);
+  var stepArray=[];
+    stepQuery.equalTo("RecipeID", localStorage.getItem("CurrentId"));
+
+    stepQuery.find({
+    success: function(results) {
+      var count = 1;
+      while(results[0].get("Step" + count) != undefined){
+        stepArray.push(results[0].get("Step" + count))
+        count+=1
+      }
+
+
+    },
+    error: function(error) {
+      console.log("Step Server not find")
+    }
+    }).done(function(){
+      this.setState({"steps":stepArray});
+     }.bind(this));
+
+     var Ingre = Parse.Object.extend("Ingredients");
+     var ingreQuery = new Parse.Query(Ingre);
+     var ingreArray=[];
+     ingreQuery.equalTo("RecipeID", localStorage.getItem("CurrentId"));
+     ingreQuery.find({
+     success: function(results) {
+        ingreArray=results;
+
+       },
+       error: function(error) {
+         console.log("Ingre Server not find")
+       }
+       }).done(function(){
+         this.setState({"Ingre":ingreArray});
+        }.bind(this));
+
 
 },
-error: function(error) {
-  console.log("Server not find")
-}
-}).done(function(){
-  this.setState({"properties":tempObject});
- }.bind(this));
+handleAdjust:function(){
+    var newQty = $("#batchSize").val();
+    var oldQty = this.state.properties.Quantity;
+    this.state.properties.Quantity=newQty;
+    var Adjustment = newQty/oldQty;
+    var newIngreList = this.state.Ingre
+    for(var i =0;i<this.state.Ingre.length;i++){
+      var newValue = eval(newIngreList[i].get("Amount"))
+
+      newValue=newValue*Adjustment;
+      newIngreList[i].set("Amount",newValue.toFixed(2))
+    };
+     console.log(this.state.Ingre)
+ this.setState({"Ingre":newIngreList})
+ console.log(this.state.Ingre)
 },
   render:function(){
     var recipeName = this.state.properties.RecipeName;
@@ -357,6 +421,37 @@ error: function(error) {
     var cookTemp = this.state.properties.CookTemp;
     var qty = this.state.properties.Quantity;
     var unit = this.state.properties.QuantityType;
+      var personal = this.state.properties.PersonalNotes;
+
+var count = 0;
+var allIngredients=this.state.Ingre;
+  var theseSteps = this.state.steps.map(function(item){
+    count+=1
+      var ingreQty=[];
+      var ingreName=[];
+      for(var i = 0;i<allIngredients.length;i++){
+        if(allIngredients[i].get("Step")==count){
+          var newQty = React.createElement("div", {className: "row ingreQty"}, eval(allIngredients[i].get("Amount")).toFixed(2).replace(/[.,]00$/, "") + " " + allIngredients[i].get("Unit"))
+          var newName =   React.createElement("div", {className: "row ingreItem"}, allIngredients[i].get("Name"))
+        ingreQty.push(newQty)
+        ingreName.push(newName)
+        }
+      };
+      return(
+        React.createElement("div", {key: Date.now() + count, className: "col-md-6 col-md-offset-3 TotalStep"}, 
+          React.createElement("div", {className: "row"}, React.createElement("h3", null, "Step ", count)), 
+          React.createElement("div", {className: "row"}, 
+            React.createElement("div", {className: "col-md-6 ingreDescription"}, React.createElement("span", null, item)), 
+            React.createElement("div", {className: "col-md-2 "}, 
+            ingreQty
+            ), 
+            React.createElement("div", {className: "col-md-4 "}, 
+              ingreName
+            )
+          )
+        )
+      )
+  })
 
     return(
     React.createElement("div", {className: "Total review"}, 
@@ -383,35 +478,20 @@ error: function(error) {
 
     React.createElement("div", {className: "row"}, 
       React.createElement("div", {className: "col-md-6 col-md-offset-3 quantity"}, 
-        React.createElement("div", {className: "row"}, React.createElement("span", null, qty, " ", unit), React.createElement("button", {className: "btn btn-secondary"}, "Adjust")), 
-        React.createElement("div", {className: "row ingredients"}, React.createElement("div", {className: "col-md-2"}, React.createElement("b", null, "1/2 Cup")), React.createElement("div", {className: "col-md-10"}, React.createElement("span", null, "Sugar")))
+        React.createElement("div", {className: "row"}, React.createElement("span", null, qty, " ", unit), React.createElement("span", {className: "floatright"}, React.createElement("input", {id: "batchSize", type: "text", placeholder: "Adjust batch Size"}), React.createElement("button", {onClick: this.handleAdjust, className: "btn btn-secondary"}, "Adjust"))), 
+        React.createElement("div", {className: "row ingredients"}, React.createElement("div", {className: "col-md-2"}))
         )
     ), 
 
     React.createElement("div", {className: "row steps"}, 
-      React.createElement("div", {className: "col-md-6 col-md-offset-3"}, 
-        React.createElement("div", {className: "row"}, "Step 1"), 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-6"}, "Stuff"), 
-          React.createElement("div", {className: "col-md-2 "}, 
-            React.createElement("div", {className: "row ingreQty"}, "1/2 cup"), 
-            React.createElement("div", {className: "row ingreQty"}, "1 cup"), 
-            React.createElement("div", {className: "row ingreQty"}, "2 tb")
-          ), 
-          React.createElement("div", {className: "col-md-4 "}, 
-            React.createElement("div", {className: "row ingreItem"}, "Sugar"), 
-            React.createElement("div", {className: "row ingreItem"}, "All purpose flour"), 
-            React.createElement("div", {className: "row ingreItem"}, "Cinnamon")
-          )
-        )
-      )
+      theseSteps
     ), 
 
     React.createElement("div", {className: "row personal"}, 
       React.createElement("div", {className: "col-md-6 col-md-offset-3"}, 
         React.createElement("div", {className: "row"}, "Personal Notes"), 
         React.createElement("div", {className: "row text"}, 
-            React.createElement("p", null, "Stuff that are personal")
+            React.createElement("p", null, personal)
           )
         )
       )

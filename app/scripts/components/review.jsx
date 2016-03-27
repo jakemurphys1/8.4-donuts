@@ -7,38 +7,96 @@ var Parse = require("parse")
 
 
 var Review = React.createClass({
-  getInitialState:function(){
+getInitialState:function(){
   return {
-    "properties": {}
+    "properties": {},
+    "steps":[],
+    "Ingre":[],
   }
 },
 componentDidMount(){
   Parse.initialize("jakeappid");
-Parse.serverURL = 'http://tiny-jakes.herokuapp.com'
+  Parse.serverURL = 'http://tiny-jakes.herokuapp.com'
 
-var recipe = Parse.Object.extend("Recipes");
+  var recipe = Parse.Object.extend("Recipes");
   var query = new Parse.Query(recipe);
   var tempObject={};
-query.get(localStorage.getItem("CurrentId"),{
-success: function(results) {
-   tempObject = {
-    "Creator":results.get("Creator"),
-    "RecipeName": results.get("RecipeName"),
-    "Type":results.get("Type"),
-    "PrepTime":results.get("PrepTime"),
-    "CookTime":results.get("CookTime"),
-    "CookTemp":results.get("CookTemp"),
-    "Quantity":results.get("Quantity"),
-    "QuantityType":results.get("QuantityType"),
-  };
+  query.get(localStorage.getItem("CurrentId"),{
+    success: function(results) {
+     tempObject = {
+      "Creator":results.get("Creator"),
+      "RecipeName": results.get("RecipeName"),
+      "Type":results.get("Type"),
+      "PrepTime":results.get("PrepTime"),
+      "CookTime":results.get("CookTime"),
+      "CookTemp":results.get("CookTemp"),
+      "Quantity":results.get("Quantity"),
+      "QuantityType":results.get("QuantityType"),
+      "PersonalNotes":results.get("PersonalNotes"),
+    };
+    },
+    error: function(error) {
+      console.log("Server not find")
+    }
+    }).done(function(){
+      this.setState({"properties":tempObject});
+     }.bind(this));
+
+  var Step = Parse.Object.extend("Steps");
+  var stepQuery = new Parse.Query(Step);
+  var stepArray=[];
+    stepQuery.equalTo("RecipeID", localStorage.getItem("CurrentId"));
+
+    stepQuery.find({
+    success: function(results) {
+      var count = 1;
+      while(results[0].get("Step" + count) != undefined){
+        stepArray.push(results[0].get("Step" + count))
+        count+=1
+      }
+
+
+    },
+    error: function(error) {
+      console.log("Step Server not find")
+    }
+    }).done(function(){
+      this.setState({"steps":stepArray});
+     }.bind(this));
+
+     var Ingre = Parse.Object.extend("Ingredients");
+     var ingreQuery = new Parse.Query(Ingre);
+     var ingreArray=[];
+     ingreQuery.equalTo("RecipeID", localStorage.getItem("CurrentId"));
+     ingreQuery.find({
+     success: function(results) {
+        ingreArray=results;
+
+       },
+       error: function(error) {
+         console.log("Ingre Server not find")
+       }
+       }).done(function(){
+         this.setState({"Ingre":ingreArray});
+        }.bind(this));
+
 
 },
-error: function(error) {
-  console.log("Server not find")
-}
-}).done(function(){
-  this.setState({"properties":tempObject});
- }.bind(this));
+handleAdjust:function(){
+    var newQty = $("#batchSize").val();
+    var oldQty = this.state.properties.Quantity;
+    this.state.properties.Quantity=newQty;
+    var Adjustment = newQty/oldQty;
+    var newIngreList = this.state.Ingre
+    for(var i =0;i<this.state.Ingre.length;i++){
+      var newValue = eval(newIngreList[i].get("Amount"))
+
+      newValue=newValue*Adjustment;
+      newIngreList[i].set("Amount",newValue.toFixed(2))
+    };
+     console.log(this.state.Ingre)
+ this.setState({"Ingre":newIngreList})
+ console.log(this.state.Ingre)
 },
   render:function(){
     var recipeName = this.state.properties.RecipeName;
@@ -49,6 +107,37 @@ error: function(error) {
     var cookTemp = this.state.properties.CookTemp;
     var qty = this.state.properties.Quantity;
     var unit = this.state.properties.QuantityType;
+      var personal = this.state.properties.PersonalNotes;
+
+var count = 0;
+var allIngredients=this.state.Ingre;
+  var theseSteps = this.state.steps.map(function(item){
+    count+=1
+      var ingreQty=[];
+      var ingreName=[];
+      for(var i = 0;i<allIngredients.length;i++){
+        if(allIngredients[i].get("Step")==count){
+          var newQty = <div className="row ingreQty">{eval(allIngredients[i].get("Amount")).toFixed(2).replace(/[.,]00$/, "") + " " + allIngredients[i].get("Unit")}</div>
+          var newName =   <div className="row ingreItem">{allIngredients[i].get("Name")}</div>
+        ingreQty.push(newQty)
+        ingreName.push(newName)
+        }
+      };
+      return(
+        <div key={Date.now() + count} className="col-md-6 col-md-offset-3 TotalStep">
+          <div className="row"><h3>Step {count}</h3></div>
+          <div className="row">
+            <div className="col-md-6 ingreDescription"><span>{item}</span></div>
+            <div className="col-md-2 ">
+            {ingreQty}
+            </div>
+            <div className="col-md-4 ">
+              {ingreName}
+            </div>
+          </div>
+        </div>
+      )
+  })
 
     return(
     <div className="Total review">
@@ -75,35 +164,20 @@ error: function(error) {
 
     <div className="row">
       <div className="col-md-6 col-md-offset-3 quantity">
-        <div className="row"><span>{qty} {unit}</span><button className="btn btn-secondary">Adjust</button></div>
-        <div className="row ingredients"><div className="col-md-2"><b>1/2 Cup</b></div><div className="col-md-10"><span>Sugar</span></div></div>
+        <div className="row"><span>{qty} {unit}</span><span className="floatright"><input id="batchSize" type="text" placeholder="Adjust batch Size"/><button onClick={this.handleAdjust} className="btn btn-secondary">Adjust</button></span></div>
+        <div className="row ingredients"><div className="col-md-2"></div></div>
         </div>
     </div>
 
     <div className="row steps">
-      <div className="col-md-6 col-md-offset-3">
-        <div className="row">Step 1</div>
-        <div className="row">
-          <div className="col-md-6">Stuff</div>
-          <div className="col-md-2 ">
-            <div className="row ingreQty">1/2 cup</div>
-            <div className="row ingreQty">1 cup</div>
-            <div className="row ingreQty">2 tb</div>
-          </div>
-          <div className="col-md-4 ">
-            <div className="row ingreItem">Sugar</div>
-            <div className="row ingreItem">All purpose flour</div>
-            <div className="row ingreItem">Cinnamon</div>
-          </div>
-        </div>
-      </div>
+      {theseSteps}
     </div>
 
     <div className="row personal">
       <div className="col-md-6 col-md-offset-3">
         <div className="row">Personal Notes</div>
         <div className="row text">
-            <p>Stuff that are personal</p>
+            <p>{personal}</p>
           </div>
         </div>
       </div>
