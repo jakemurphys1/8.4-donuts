@@ -7,6 +7,10 @@ var MakerForm=require("./components/maker.jsx")
 var SignupForm=require("./components/signin.jsx")
 var ReviewForm=require("./components/review.jsx")
 var Parse = require("parse")
+var Input = require("react-bootstrap/lib/Input");
+var ButtonInput= require("react-bootstrap/lib/ButtonInput")
+
+var appContainer= document.getElementById("itemList")
 
 //local
 var models = require("./models/models.js");
@@ -22,16 +26,26 @@ var RecipeRouter = Backbone.Router.extend({
     "Review":"Review"
   },
   home:function(){
-ReactDOM.render(<HomeForm collection={myCollection} router={this} />,document.getElementById("itemList"))
+    ReactDOM.unmountComponentAtNode(appContainer);
+    $(function(){
+      ReactDOM.render(<HomeForm collection={myCollection} router={this} />,appContainer)
+    })
+
   },
   addRecipe:function(){
-ReactDOM.render(<MakerForm collection={myCollection} router={this}/>,document.getElementById("itemList"))
+    ReactDOM.unmountComponentAtNode(appContainer);
+ReactDOM.render(<MakerForm collection={myCollection} router={this}/>,appContainer)
   },
   Login:function(){
-ReactDOM.render(<SignupForm collection={myCollection} router={this}/>,document.getElementById("itemList"))
+    ReactDOM.unmountComponentAtNode(appContainer);
+ReactDOM.render(<SignupForm collection={myCollection} router={this}/>,appContainer)
   },
   Review:function(){
-    ReactDOM.render(<ReviewForm collection={myCollection} router={this}/>,document.getElementById("itemList"))
+    ReactDOM.unmountComponentAtNode(appContainer);
+    $(function(){
+        ReactDOM.render(<ReviewForm collection={myCollection} router={this}/>,appContainer)
+    })
+
   },
 })
 

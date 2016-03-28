@@ -30,6 +30,7 @@ componentDidMount(){
       "PrepTime":results.get("PrepTime"),
       "CookTime":results.get("CookTime"),
       "CookTemp":results.get("CookTemp"),
+      "TempType":results.get("TempType"),
       "Quantity":results.get("Quantity"),
       "QuantityType":results.get("QuantityType"),
       "PersonalNotes":results.get("PersonalNotes"),
@@ -54,8 +55,6 @@ componentDidMount(){
         stepArray.push(results[0].get("Step" + count))
         count+=1
       }
-
-
     },
     error: function(error) {
       console.log("Step Server not find")
@@ -94,77 +93,76 @@ handleAdjust:function(){
       newValue=newValue*Adjustment;
       newIngreList[i].set("Amount",newValue.toFixed(2))
     };
-     console.log(this.state.Ingre)
  this.setState({"Ingre":newIngreList})
- console.log(this.state.Ingre)
 },
   render:function(){
-    var recipeName = this.state.properties.RecipeName;
-    var creator = this.state.properties.Creator;
-    var type = this.state.properties.Type;
-    var prepTime = this.state.properties.PrepTime;
-    var cookTime=this.state.properties.CookTime;
-    var cookTemp = this.state.properties.CookTemp;
-    var qty = this.state.properties.Quantity;
-    var unit = this.state.properties.QuantityType;
-      var personal = this.state.properties.PersonalNotes;
+        var count = 0;
+        var allIngredients=this.state.Ingre;
+        var theseSteps = this.state.steps.map(function(item){
+          count+=1
+            var ingreQty=[];
+            var ingreName=[];
+            for(var i = 0;i<allIngredients.length;i++){
+              if(allIngredients[i].get("Step")==count){
+                var newQty = <div className="row ingreQty">{eval(allIngredients[i].get("Amount")).toFixed(2).replace(/[.,]00$/, "") + " " + allIngredients[i].get("Unit")}</div>
+                var newName =   <div className="row ingreItem">{allIngredients[i].get("Name")}</div>
+              ingreQty.push(newQty)
+              ingreName.push(newName)
+              }
+            };
+            return(
+              <div key={Date.now() + count} className="col-md-6 col-md-offset-3 TotalStep">
+                <div className="row"><h3>Step {count}</h3></div>
+                <div className="row">
+                  <div className="col-md-6 ingreDescription"><span>{item}</span></div>
+                  <div className="col-md-2 ">
+                  {ingreQty}
+                  </div>
+                  <div className="col-md-4 ">
+                    {ingreName}
+                  </div>
+                </div>
+              </div>
+            )
+        })
 
-var count = 0;
-var allIngredients=this.state.Ingre;
-  var theseSteps = this.state.steps.map(function(item){
-    count+=1
-      var ingreQty=[];
-      var ingreName=[];
-      for(var i = 0;i<allIngredients.length;i++){
-        if(allIngredients[i].get("Step")==count){
-          var newQty = <div className="row ingreQty">{eval(allIngredients[i].get("Amount")).toFixed(2).replace(/[.,]00$/, "") + " " + allIngredients[i].get("Unit")}</div>
-          var newName =   <div className="row ingreItem">{allIngredients[i].get("Name")}</div>
-        ingreQty.push(newQty)
-        ingreName.push(newName)
-        }
-      };
-      return(
-        <div key={Date.now() + count} className="col-md-6 col-md-offset-3 TotalStep">
-          <div className="row"><h3>Step {count}</h3></div>
-          <div className="row">
-            <div className="col-md-6 ingreDescription"><span>{item}</span></div>
-            <div className="col-md-2 ">
-            {ingreQty}
-            </div>
-            <div className="col-md-4 ">
-              {ingreName}
-            </div>
-          </div>
-        </div>
-      )
-  })
+        allIngredients=allIngredients.map(function(item){
+          var ingreName=item.get("Name");
+          var ingreQty = eval(item.get("Amount")).toFixed(2).replace(/[.,]00$/, "") ;
+          var ingreType = item.get("Unit");
+
+          return(<div className="col-md-3 col-xs-12"><b><p>{ingreName}:</p></b><p>{ingreQty} {ingreType} </p></div>)
+        })
+
 
     return(
     <div className="Total review">
 
-      <div className="row heading"><h1>{recipeName}</h1><p>By {creator}</p></div>
+      <div className="row heading"><h1>{this.state.properties.RecipeName}</h1><p>By {this.state.properties.Creator}</p></div>
     <div className="row">
       <div className="col-md-3 reviewInfo">
         <div className="row"><span>Type</span></div>
-        <div className="row"><p>{type}</p></div>
+        <div className="row"><p>{this.state.properties.Type}</p></div>
       </div>
       <div className="col-md-3 reviewInfo">
         <div className="row"><span>Prep Time</span></div>
-        <div className="row"><p>{prepTime}</p></div>
+        <div className="row"><p>{this.state.properties.PrepTime}</p></div>
       </div>
       <div className="col-md-3 reviewInfo">
         <div className="row"><span>Cook Time</span></div>
-        <div className="row"><p>{cookTime}</p></div>
+        <div className="row"><p>{this.state.properties.CookTime}</p></div>
       </div>
       <div className="col-md-3 reviewInfo">
         <div className="row"><span>Cook Temp</span></div>
-        <div className="row"><p>{cookTemp}</p></div>
+        <div className="row"><p>{this.state.properties.CookTemp} {this.state.properties.TempType}</p></div>
       </div>
     </div>
 
     <div className="row">
       <div className="col-md-6 col-md-offset-3 quantity">
-        <div className="row"><span>{qty} {unit}</span><span className="floatright"><input id="batchSize" type="text" placeholder="Adjust batch Size"/><button onClick={this.handleAdjust} className="btn btn-secondary">Adjust</button></span></div>
+        <div className="row"><span>{this.state.properties.Quantity} {this.state.properties.QuantityType}</span><span className="floatright"><input id="batchSize" type="text" placeholder="Adjust batch Size"/>
+        <button onClick={this.handleAdjust} className="btn btn-secondary">Adjust</button></span></div>
+        <div className="row"><h3>Ingredients:</h3>{allIngredients}</div>
         <div className="row ingredients"><div className="col-md-2"></div></div>
         </div>
     </div>
@@ -177,7 +175,7 @@ var allIngredients=this.state.Ingre;
       <div className="col-md-6 col-md-offset-3">
         <div className="row">Personal Notes</div>
         <div className="row text">
-            <p>{personal}</p>
+            <p>{this.state.properties.PersonalNotes}</p>
           </div>
         </div>
       </div>

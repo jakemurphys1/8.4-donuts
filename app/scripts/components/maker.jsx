@@ -11,9 +11,10 @@ var IngredientItem = React.createClass({
   //ReactDOM.unmountComponentAtNode(document.getElementById('steps'));
   },
   render:function(){
-    return(<div id={"div" + this.props.name}><input id = {"amount" + this.props.name} className="inputs1" type="text" placeholder="Amount" />
-  <input id = {"unit" + this.props.name} className="inputs1" type="text" placeholder="Unit" /><input id = {"ingredient" + this.props.name} className="inputs2" type="text" placeholder="Ingredient" />
-    <button id={this.props.name} onClick={this.handleRemove} className = "btn btn-secondary">remove</button></div>
+    console.log(this.props.list)
+    return(<div id={"div" + this.props.name}><input id = {"amount" + this.props.name} className="inputs1 ingreInput" type="text" placeholder="Amount" />
+  <input id = {"unit" + this.props.name} className="inputs1 ingreInput" type="text" placeholder="Unit" /><input id = {"ingredient" + this.props.name} className="inputs2 ingreInput" type="text" placeholder="Ingredient" />
+    </div>
     )
   },
 });
@@ -26,20 +27,22 @@ var Steps = React.createClass({
       "ingredients": [<IngredientItem name={"Ingre-1"} key={"Ingre-1"}/>],
     };
   },
-  handleRemove:function(){
+  handleReset:function(){
 
+    this.replaceState(this.getInitialState())
+$(".ingreInput").val("");
   },
   handleAdd:function(){
       var newingredient = this.state.ingredients;
-      newingredient.push(<IngredientItem name={"Ingre-"+(newingredient.length+1)} key={"Ingre-"+(newingredient.length+1)}/>)
+      newingredient.push(<IngredientItem List = {this.state.ingredients} name={"Ingre-"+(newingredient.length+1)} key={"Ingre-"+(newingredient.length+1)}/>)
              this.setState({"ingredients": newingredient})
   },
   render:function(){
 
     return(
       <div id="steps">{this.state.ingredients}
-        <button onClick={this.handleAdd} className = "btn btn-primary">Add</button>
-        <textarea id="Description"></textarea>
+        <button onClick={this.handleAdd} className = "btn btn-primary">Add</button><button onClick={this.handleReset} className = "reset btn btn-secondary">Reset</button>
+        <textarea className="ingreInput" id="Description"></textarea>
       </div>
     )
   }
@@ -90,7 +93,6 @@ var Maker = React.createClass({
 
 
         for(var j = 0;j<this.state.allSteps[i].ingredients.length;j++){
-          console.log("check")
           var Ingredient = Parse.Object.extend("Ingredients");
           var ingredient = new Ingredient();
             var ingrdata ={
@@ -109,7 +111,6 @@ var Maker = React.createClass({
         var curStep = "Step"+(i+1);
         stepList[curStep]=this.state.allSteps[i].Description;
       };
-      console.log("stepList",stepList)
 
       steps.save(stepList).then(function(object){
   Backbone.history.navigate("Review",{trigger:true})
@@ -134,7 +135,6 @@ var Maker = React.createClass({
     }
     this.state.allSteps.push(newStep)
     this.setState({"steps":[<Steps key={Date.now()}/>]})
-    console.log(this.state.allSteps)
   },
 
 render:function(){
@@ -164,8 +164,8 @@ return(
     <input id="cookTime" className="inputs1" type="text" placeholder="Cook Time" />
         <input id="cookTemp" className="inputs1" type="text" placeholder="Cook Temp" />
       <select id="Temptype">
-        <option value="Farenheit">Farenheit</option>
-        <option value="Celsius">Celsius</option>
+        <option value="F" placeholder="F">F</option>
+        <option value="C">C</option>
       </select>
 </div>
 
@@ -177,7 +177,7 @@ return(
 
 <div className="row info">
     {this.state.steps}
-  <button id="NextStep" onClick={this.handleNewStep} className="btn btn-primary">Next Step</button>
+  <button id="NextStep" onClick={this.handleNewStep} className="btn btn-primary">Log this Step</button>
 </div>
 
 <div className="row info">

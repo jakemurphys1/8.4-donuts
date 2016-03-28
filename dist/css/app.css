@@ -5821,6 +5821,11 @@ img {
   text-align: center;
   background-color: #d0d0d0;
   height: 50px; }
+  .header #superChef {
+    position: absolute;
+    font-size: 30px;
+    margin-left: 40%;
+    margin-top: -0px; }
   .header #left {
     font-style: italic; }
   .header p, .header img {
@@ -5840,7 +5845,7 @@ img {
   .Total .listRow {
     width: 80%;
     height: 200px;
-    margin: 0 auto; }
+    margin: 0px auto; }
   .Total .items {
     margin-top: 10px; }
   .Total .item {
@@ -5849,12 +5854,27 @@ img {
     width: 150px;
     height: 150px;
     display: inline-block;
-    margin-left: 20px; }
+    margin-left: 20px;
+    margin-top: 10px;
+    background-size: 100% 100%; }
     .Total .item h2 {
-      font-size: 15px;
+      font-size: 20px;
+      background-color: white;
       text-align: center;
       position: relative;
-      word-wrap: break-word; }
+      word-wrap: break-word;
+      font-weight: bolder;
+      height: 50px;
+      box-shadow: 2px 2px #111111; }
+    .Total .item p {
+      font-size: 28px;
+      text-align: center;
+      width: 100%;
+      position: absolute;
+      margin-top: 25px;
+      margin-left: -15px;
+      font-weight: bolder;
+      text-shadow: 2px 2px #111111; }
   .Total .right {
     float: right; }
   .Total .recipeHead {
