@@ -175,7 +175,7 @@ return(
                 <input id="QuantityType" className="inputs2" type="text" placeholder="Cookies, loaves, ect." />
               </div>
           </div>
-          <div className="col-md-6 makerImage"><div id="makerImage"><img src="images/Chef.jpeg" /></div></div>
+          <div className="col-md-6 makerImage"><div id="makerImage"><img src="images/cjjhef.jpeg" /></div></div>
     </div>
 
 
