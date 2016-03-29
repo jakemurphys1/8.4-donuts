@@ -26,6 +26,7 @@ var RecipeRouter = Backbone.Router.extend({
     "Review":"Review"
   },
   home:function(){
+    $(".signFloat").addClass("hidden")
     ReactDOM.unmountComponentAtNode(appContainer);
     $(function(){
       ReactDOM.render(<HomeForm collection={myCollection} router={this} />,appContainer)
@@ -37,8 +38,7 @@ var RecipeRouter = Backbone.Router.extend({
 ReactDOM.render(<MakerForm collection={myCollection} router={this}/>,appContainer)
   },
   Login:function(){
-    ReactDOM.unmountComponentAtNode(appContainer);
-ReactDOM.render(<SignupForm collection={myCollection} router={this}/>,appContainer)
+
   },
   Review:function(){
     ReactDOM.unmountComponentAtNode(appContainer);
@@ -49,6 +49,9 @@ ReactDOM.render(<SignupForm collection={myCollection} router={this}/>,appContain
   },
 })
 
+//load the sign form
+ReactDOM.render(<SignupForm collection={myCollection} router={this}/>,document.getElementById("signFloat"))
+
 var router = new RecipeRouter();
 Backbone.history.start();
 
@@ -58,7 +61,7 @@ $("#headerPlus").click(function(){
 })
 
 $("#headerUser").click(function(){
-    router.navigate("Login",{trigger:true})
+  $(".signFloat").removeClass("hidden")
 });
 
 $("#SBmyRecipes").click(function(){

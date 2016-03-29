@@ -42,7 +42,7 @@ $(".ingreInput").val("");
     return(
       <div id="steps">{this.state.ingredients}
         <button onClick={this.handleAdd} className = "btn btn-primary">Add</button><button onClick={this.handleReset} className = "reset btn btn-secondary">Reset</button>
-        <textarea className="ingreInput" id="Description"></textarea>
+        <textarea className="ingreInput" id="Description" placeholder="Instructions for this step"></textarea>
       </div>
     )
   }
@@ -144,38 +144,44 @@ render:function(){
 return(
   <div className="Total">
 
-<div className="row recipeHead">
-  Basic info
-</div>
+      <div className="row recipeHead">
+        <div className="col-md-6">
+            <h1>Basic info</h1>
 
-<div className="row recipeHead">
-    <input id="recipeName" type="text" placeholder="Recipe Name" />
-    <p><input id="CreatorName" type="text" placeholder="By" /></p>
-</div>
+
+      <div className="row recipeHead">
+                  <input className="HeadInput" id="recipeName" type="text" placeholder="Recipe Name" />
+                  <p><input className="HeadInput" id="CreatorName" type="text" placeholder="By" /></p>
+              </div>
+
+              <div className="row info">
+                  <select id="recipeType">
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Dessert">Dessert</option>
+                  </select>
+                  <input id="prepTime" className="inputs1" type="text" placeholder="Prep Time" />
+                  <input id="cookTime" className="inputs1" type="text" placeholder="Cook Time" />
+                      <input id="cookTemp" className="inputs1" type="text" placeholder="Cook Temp" />
+                    <select id="Temptype">
+                      <option value="F" placeholder="F">F</option>
+                      <option value="C">C</option>
+                    </select>
+              </div>
+              <div className="row info">
+                <span>This recipe will make</span>
+                <input id="Quantity" className="inputs1" type="text" placeholder="Amount" />
+                <input id="QuantityType" className="inputs2" type="text" placeholder="Cookies, loaves, ect." />
+              </div>
+          </div>
+          <div className="col-md-6 makerImage"><div id="makerImage"><img src="images/Chef.jpeg" /></div></div>
+    </div>
+
+
 
 <div className="row info">
-    <select id="recipeType">
-      <option value="Breakfast">Breakfast</option>
-      <option value="Lunch">Lunch</option>
-      <option value="Dinner">Dinner</option>
-      <option value="Dessert">Dessert</option>
-    </select>
-    <input id="prepTime" className="inputs1" type="text" placeholder="Prep Time" />
-    <input id="cookTime" className="inputs1" type="text" placeholder="Cook Time" />
-        <input id="cookTemp" className="inputs1" type="text" placeholder="Cook Temp" />
-      <select id="Temptype">
-        <option value="F" placeholder="F">F</option>
-        <option value="C">C</option>
-      </select>
-</div>
-
-<div className="row info">
-  <span>This recipe will make</span>
-  <input id="Quantity" className="inputs1" type="text" placeholder="Amount" />
-  <input id="QuantityType" className="inputs2" type="text" placeholder="Cookies, loaves, ect." />
-</div>
-
-<div className="row info">
+  <h3>STEPS:</h3>
     {this.state.steps}
   <button id="NextStep" onClick={this.handleNewStep} className="btn btn-primary">Log this Step</button>
 </div>

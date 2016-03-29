@@ -5817,6 +5817,48 @@ button.close {
 img {
   max-width: 100%; }
 
+#container {
+  background-color: #cdbda8; }
+
+.signFloat {
+  box-shadow: 5px 5px #111111;
+  border-radius: 5px;
+  position: absolute;
+  width: 350px;
+  height: auto;
+  margin-top: 20px;
+  padding: 5px;
+  z-index: 1;
+  border: solid black 1px;
+  background-color: #cdbda8; }
+  .signFloat .TotalSignup {
+    margin-top: 20px; }
+    .signFloat .TotalSignup .btn-primary {
+      width: 300px;
+      margin-top: 5px; }
+    .signFloat .TotalSignup .btn-secondary {
+      width: 50;
+      float: right;
+      margin-right: 50px;
+      margin-top: 5px; }
+    .signFloat .TotalSignup .form-login {
+      display: inline-block;
+      margin: 0 auto; }
+      .signFloat .TotalSignup .form-login input {
+        background-color: #dedede;
+        margin-top: 5px;
+        width: 300px; }
+    .signFloat .TotalSignup .heading {
+      border-radius: 5px;
+      background-color: #457cb2;
+      text-align: center;
+      width: 349px;
+      margin-left: 10px;
+      margin-top: -25px;
+      font-size: 30px;
+      font-weight: bolder;
+      color: white; }
+
 .header {
   text-align: center;
   background-color: #d0d0d0;
@@ -5834,8 +5876,8 @@ img {
     margin-top: 10px; }
 
 .sideBar {
-  background-color: #e6e6e6;
-  height: 2000px; }
+  background-color: #d8a96d;
+  height: 1000px; }
   .sideBar .row {
     text-align: center;
     padding: 30px; }
@@ -5859,7 +5901,7 @@ img {
     background-size: 100% 100%; }
     .Total .item h2 {
       font-size: 20px;
-      background-color: white;
+      background-color: #cdbda8;
       text-align: center;
       position: relative;
       word-wrap: break-word;
@@ -5880,28 +5922,37 @@ img {
   .Total .recipeHead {
     margin: 0 auto;
     width: 80%; }
-    .Total .recipeHead input {
+    .Total .recipeHead .HeadInput {
       margin-top: 10px;
+      margin-left: -40px;
       width: 400px;
-      height: 30px; }
+      height: 30px;
+      background-color: #dedede; }
+    .Total .recipeHead #makerImage img {
+      margin-left: 100px;
+      width: 300px;
+      height: auto; }
 
 .info {
-  margin: 0 auto;
-  width: 80%; }
+  margin: 0 auto; }
   .info .inputs1 {
-    width: 100px;
-    margin: 5px; }
+    width: 80px;
+    margin: 5px;
+    background-color: #dedede; }
   .info .inputs2 {
-    width: 200px;
-    margin: 5px; }
+    width: 150px;
+    margin: 5px;
+    background-color: #dedede; }
   .info #Temptype {
     width: 40px; }
   .info #Description {
     width: 100%;
-    height: 200px; }
+    height: 200px;
+    background-color: #dedede; }
   .info #PersonalNotes {
     width: 100%;
-    height: 200px; }
+    height: 200px;
+    background-color: #dedede; }
   .info #Save {
     margin-top: 30px;
     width: 140px;
@@ -5912,17 +5963,25 @@ img {
     height: 30px;
     float: right; }
 
-.TotalSignup .btn {
-  width: 300px; }
-.TotalSignup .form-login {
-  display: inline-block;
-  margin: 0 auto; }
-
-.review .heading h1, .review .heading p {
-  text-align: center; }
+.review .heading {
+  background-image: url("../images/Cooking.png");
+  background-size: cover;
+  background-position: 0px -350px; }
+  .review .heading h1, .review .heading p {
+    text-align: center; }
+  .review .heading h1 {
+    font-size: 80px;
+    text-shadow: 4px 4px #111111; }
+  .review .heading p {
+    font-size: 30px;
+    text-shadow: 2px 2px #111111; }
 .review .quantity {
-  background-color: whitesmoke;
+  border: solid black 1px;
   margin-top: 30px; }
+  .review .quantity #Amount {
+    margin-left: 30px; }
+  .review .quantity h3 {
+    text-align: center; }
   .review .quantity span {
     font-size: 20px; }
   .review .quantity .floatright {
@@ -5950,9 +6009,6 @@ img {
   .steps .TotalStep {
     border: solid black 1px;
     margin-top: 10px; }
-    .steps .TotalStep .ingreDescription {
-      border: solid whitesmoke 1px;
-      background-color: whitesmoke; }
 
 .personal {
   margin-top: 30px; }

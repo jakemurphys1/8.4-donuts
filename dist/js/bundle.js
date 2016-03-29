@@ -186,7 +186,7 @@ $(".ingreInput").val("");
     return(
       React.createElement("div", {id: "steps"}, this.state.ingredients, 
         React.createElement("button", {onClick: this.handleAdd, className: "btn btn-primary"}, "Add"), React.createElement("button", {onClick: this.handleReset, className: "reset btn btn-secondary"}, "Reset"), 
-        React.createElement("textarea", {className: "ingreInput", id: "Description"})
+        React.createElement("textarea", {className: "ingreInput", id: "Description", placeholder: "Instructions for this step"})
       )
     )
   }
@@ -288,38 +288,44 @@ render:function(){
 return(
   React.createElement("div", {className: "Total"}, 
 
-React.createElement("div", {className: "row recipeHead"}, 
-  "Basic info"
-), 
+      React.createElement("div", {className: "row recipeHead"}, 
+        React.createElement("div", {className: "col-md-6"}, 
+            React.createElement("h1", null, "Basic info"), 
 
-React.createElement("div", {className: "row recipeHead"}, 
-    React.createElement("input", {id: "recipeName", type: "text", placeholder: "Recipe Name"}), 
-    React.createElement("p", null, React.createElement("input", {id: "CreatorName", type: "text", placeholder: "By"}))
-), 
 
-React.createElement("div", {className: "row info"}, 
-    React.createElement("select", {id: "recipeType"}, 
-      React.createElement("option", {value: "Breakfast"}, "Breakfast"), 
-      React.createElement("option", {value: "Lunch"}, "Lunch"), 
-      React.createElement("option", {value: "Dinner"}, "Dinner"), 
-      React.createElement("option", {value: "Dessert"}, "Dessert")
+      React.createElement("div", {className: "row recipeHead"}, 
+                  React.createElement("input", {className: "HeadInput", id: "recipeName", type: "text", placeholder: "Recipe Name"}), 
+                  React.createElement("p", null, React.createElement("input", {className: "HeadInput", id: "CreatorName", type: "text", placeholder: "By"}))
+              ), 
+
+              React.createElement("div", {className: "row info"}, 
+                  React.createElement("select", {id: "recipeType"}, 
+                    React.createElement("option", {value: "Breakfast"}, "Breakfast"), 
+                    React.createElement("option", {value: "Lunch"}, "Lunch"), 
+                    React.createElement("option", {value: "Dinner"}, "Dinner"), 
+                    React.createElement("option", {value: "Dessert"}, "Dessert")
+                  ), 
+                  React.createElement("input", {id: "prepTime", className: "inputs1", type: "text", placeholder: "Prep Time"}), 
+                  React.createElement("input", {id: "cookTime", className: "inputs1", type: "text", placeholder: "Cook Time"}), 
+                      React.createElement("input", {id: "cookTemp", className: "inputs1", type: "text", placeholder: "Cook Temp"}), 
+                    React.createElement("select", {id: "Temptype"}, 
+                      React.createElement("option", {value: "F", placeholder: "F"}, "F"), 
+                      React.createElement("option", {value: "C"}, "C")
+                    )
+              ), 
+              React.createElement("div", {className: "row info"}, 
+                React.createElement("span", null, "This recipe will make"), 
+                React.createElement("input", {id: "Quantity", className: "inputs1", type: "text", placeholder: "Amount"}), 
+                React.createElement("input", {id: "QuantityType", className: "inputs2", type: "text", placeholder: "Cookies, loaves, ect."})
+              )
+          ), 
+          React.createElement("div", {className: "col-md-6 makerImage"}, React.createElement("div", {id: "makerImage"}, React.createElement("img", {src: "images/Chef.jpeg"})))
     ), 
-    React.createElement("input", {id: "prepTime", className: "inputs1", type: "text", placeholder: "Prep Time"}), 
-    React.createElement("input", {id: "cookTime", className: "inputs1", type: "text", placeholder: "Cook Time"}), 
-        React.createElement("input", {id: "cookTemp", className: "inputs1", type: "text", placeholder: "Cook Temp"}), 
-      React.createElement("select", {id: "Temptype"}, 
-        React.createElement("option", {value: "F", placeholder: "F"}, "F"), 
-        React.createElement("option", {value: "C"}, "C")
-      )
-), 
+
+
 
 React.createElement("div", {className: "row info"}, 
-  React.createElement("span", null, "This recipe will make"), 
-  React.createElement("input", {id: "Quantity", className: "inputs1", type: "text", placeholder: "Amount"}), 
-  React.createElement("input", {id: "QuantityType", className: "inputs2", type: "text", placeholder: "Cookies, loaves, ect."})
-), 
-
-React.createElement("div", {className: "row info"}, 
+  React.createElement("h3", null, "STEPS:"), 
     this.state.steps, 
   React.createElement("button", {id: "NextStep", onClick: this.handleNewStep, className: "btn btn-primary"}, "Log this Step")
 ), 
@@ -505,7 +511,7 @@ handleAdjust:function(){
 
     React.createElement("div", {className: "row"}, 
       React.createElement("div", {className: "col-md-6 col-md-offset-3 quantity"}, 
-        React.createElement("div", {className: "row"}, React.createElement("span", null, this.state.properties.Quantity, " ", this.state.properties.QuantityType), React.createElement("span", {className: "floatright"}, React.createElement("input", {id: "batchSize", type: "text", placeholder: "Adjust batch Size"}), 
+        React.createElement("div", {className: "row"}, React.createElement("span", {id: "Amount"}, this.state.properties.Quantity, " ", this.state.properties.QuantityType), React.createElement("span", {className: "floatright"}, React.createElement("input", {id: "batchSize", type: "text", placeholder: "Adjust batch Size"}), 
         React.createElement("button", {onClick: this.handleAdjust, className: "btn btn-secondary"}, "Adjust"))), 
         React.createElement("div", {className: "row"}, React.createElement("h3", null, "Ingredients:"), allIngredients), 
         React.createElement("div", {className: "row ingredients"}, React.createElement("div", {className: "col-md-2"}))
@@ -548,8 +554,11 @@ var Parse = require("parse")
 
 var SignUp = React.createClass({displayName: "SignUp",
   componentDidMount:function(){
-    Parse.initialize("jakeappid");
-  Parse.serverURL = 'http://tiny-jakes.herokuapp.com'
+      Parse.initialize("jakeappid");
+    Parse.serverURL = 'http://tiny-jakes.herokuapp.com'
+  },
+  handleExit:function(){
+    $(".signFloat").addClass("hidden");
   },
   login:function(e){
     e.preventDefault();
@@ -557,19 +566,24 @@ var SignUp = React.createClass({displayName: "SignUp",
       success: function(user) {
         console.log("You logged in as " , user)
         localStorage.setItem("userName",$("#loginEmail").val());
-        console.log(localStorage.getItem("userName"))
       },
       error: function(user, error) {
         console.log("You failed to log in as ",user,error)
       }
     });
+    $(".signFloat").addClass("hidden");
   },
   signup:function(event){
     var user = new Parse.User();
 
     event.preventDefault();
+    if($("#signupPassword1").val()!=$("#signupPassword2").val()){
+      alert("Your passwords did not match.")
+      return;
+    }
     var $form = $(this);
-    var data = {"username":$("#signupEmail").val(),"password":$("#signupPassword").val()};
+    var data = {"username":$("#signupUsername").val(),"password":$("#signupPassword1").val(),"Fname":$("#signupFname").val(),
+    "Lname":$("#signupLname").val(),"email":$("#signupEmail").val()};
 user.set(data);
 
   user.signUp(null, {
@@ -580,31 +594,42 @@ user.set(data);
       console.log(user,error);
     }
   });
-  $("#signupEmail").val("");
-  $("#signupPassword").val("")
+  localStorage.setItem("userName",$("#signupEmail").val());
+$(".signFloat").addClass("hidden");
+
   },
   render:function(){
 
     return(
       React.createElement("div", {className: "TotalSignup row"}, 
-          React.createElement("div", {className: "col-md-6"}, 
+        React.createElement("div", {className: "row heading"}, "Log In"), 
+          React.createElement("div", {className: "row"}, 
+            React.createElement("div", {className: "col-md-6 col-xs-offset-1"}, 
                 React.createElement("form", {onSubmit: this.login, id: "login", action: "", className: "form-login"}, 
                     React.createElement("h2", null, "Please login"), 
-                    React.createElement("input", {id: "loginEmail", type: "text", name: "email", placeholder: "Email"}), 
+                    React.createElement("input", {id: "loginEmail", type: "text", name: "email", placeholder: "Username"}), 
                     React.createElement("input", {id: "loginPassword", type: "password", name: "password", placeholder: "Password"}), 
                     React.createElement("button", {type: "submit", className: "btn btn-lg btn-block btn-primary"}, "Login")
                 )
+                )
               ), 
-            React.createElement("div", {className: "col-md-6"}, 
-              React.createElement("form", {onSubmit: this.signup, id: "signin", action: "", className: "form-login"}, 
-                React.createElement("h2", null, "...Or Sign Up"), 
-                React.createElement("div", {className: "inputContainer"}, 
-                React.createElement("input", {id: "signupEmail", type: "text", name: "email", placeholder: "Email"}), 
-                React.createElement("input", {id: "signupPassword", type: "password", name: "password", placeholder: "Password"})
-                ), 
-                React.createElement("button", {type: "submit", className: "btn btn-lg btn-block btn-primary signinbutton"}, "Sign Up")
-              )
-          )
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-6 col-xs-offset-1"}, 
+                  React.createElement("form", {onSubmit: this.signup, id: "signin", action: "", className: "form-login"}, 
+                    React.createElement("h2", null, "...Or Sign Up"), 
+                    React.createElement("div", {className: "inputContainer"}, 
+                        React.createElement("input", {id: "signupFname", type: "text", name: "Fname", placeholder: "First Name"}), 
+                        React.createElement("input", {id: "signupLname", type: "text", name: "Lname", placeholder: "Last Name"}), 
+                      React.createElement("input", {id: "signupUsername", type: "text", name: "Username", placeholder: "Username"}), 
+                    React.createElement("input", {id: "signupEmail", type: "text", name: "email", placeholder: "Email"}), 
+                    React.createElement("input", {id: "signupPassword1", type: "password", name: "password1", placeholder: "Password"}), 
+                    React.createElement("input", {id: "signupPassword2", type: "password", name: "password2", placeholder: "Confirm Password"})
+                    ), 
+                    React.createElement("button", {type: "submit", className: "btn btn-lg btn-block btn-primary signinbutton"}, "Sign Up")
+                  )
+                )
+          ), 
+          React.createElement("button", {onClick: this.handleExit, className: "btn btn-secondary"}, "Exit")
     )
     )
 
@@ -643,6 +668,7 @@ var RecipeRouter = Backbone.Router.extend({
     "Review":"Review"
   },
   home:function(){
+    $(".signFloat").addClass("hidden")
     ReactDOM.unmountComponentAtNode(appContainer);
     $(function(){
       ReactDOM.render(React.createElement(HomeForm, {collection: myCollection, router: this}),appContainer)
@@ -654,8 +680,7 @@ var RecipeRouter = Backbone.Router.extend({
 ReactDOM.render(React.createElement(MakerForm, {collection: myCollection, router: this}),appContainer)
   },
   Login:function(){
-    ReactDOM.unmountComponentAtNode(appContainer);
-ReactDOM.render(React.createElement(SignupForm, {collection: myCollection, router: this}),appContainer)
+
   },
   Review:function(){
     ReactDOM.unmountComponentAtNode(appContainer);
@@ -666,6 +691,9 @@ ReactDOM.render(React.createElement(SignupForm, {collection: myCollection, route
   },
 })
 
+//load the sign form
+ReactDOM.render(React.createElement(SignupForm, {collection: myCollection, router: this}),document.getElementById("signFloat"))
+
 var router = new RecipeRouter();
 Backbone.history.start();
 
@@ -675,7 +703,7 @@ $("#headerPlus").click(function(){
 })
 
 $("#headerUser").click(function(){
-    router.navigate("Login",{trigger:true})
+  $(".signFloat").removeClass("hidden")
 });
 
 $("#SBmyRecipes").click(function(){

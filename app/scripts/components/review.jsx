@@ -160,7 +160,7 @@ handleAdjust:function(){
 
     <div className="row">
       <div className="col-md-6 col-md-offset-3 quantity">
-        <div className="row"><span>{this.state.properties.Quantity} {this.state.properties.QuantityType}</span><span className="floatright"><input id="batchSize" type="text" placeholder="Adjust batch Size"/>
+        <div className="row"><span id = "Amount">{this.state.properties.Quantity} {this.state.properties.QuantityType}</span><span className="floatright"><input id="batchSize" type="text" placeholder="Adjust batch Size"/>
         <button onClick={this.handleAdjust} className="btn btn-secondary">Adjust</button></span></div>
         <div className="row"><h3>Ingredients:</h3>{allIngredients}</div>
         <div className="row ingredients"><div className="col-md-2"></div></div>
