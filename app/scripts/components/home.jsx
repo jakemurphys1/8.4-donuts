@@ -26,7 +26,7 @@ imgUrl="images/Dessert.jpg"
 var mealImage = {
   backgroundImage: 'url(' + imgUrl + ')',
 }
-    return(<div style={mealImage} onClick={this.handleReview} id={this.props.model.id} className="item col-md-3">
+    return(<div style={mealImage} onClick={this.handleReview} id={this.props.model.id} className="item col-md-3 col-sm-6 col-xs-12">
     <h2 className="homeName" >{this.props.model.get("RecipeName")}</h2><p>{mealType}</p>
     </div>)
   },
@@ -78,51 +78,53 @@ handleViewall:function(){
 },
   render:function(){
     var otherSection;
-if(this.state.Shorten){
-  otherSection = <div className="otherSection"><div className="publicRecipes row listRow">
-     <div className="row headerPart"><span className="left">Public Recipes</span><span className="right">view all</span></div>
-     <div className="row items">
-       <div className="item"></div>
-       <div className="item"></div>
-       <div className="item"></div>
-     </div>
-   </div>
 
-   <div className="popularRecipes row listRow">
-     <div className="row headerPart"><span className="left">Popular Recipes</span><span className="right">view all</span></div>
-     <div className="row items">
-       <div className="item"></div>
-       <div className="item"></div>
-       <div className="item"></div>
-     </div>
-   </div>
-
-   <div className="favoriteRecipes row listRow">
-     <div className="row headerPart"><span className="left">My Favorite Recipes</span><span className="right">view all</span></div>
-     <div className="row items">
-       <div className="item"></div>
-       <div className="item"></div>
-       <div className="item"></div>
-     </div>
-   </div>
-
-   <div className="myPantry row listRow">
-     <div className="row headerPart"><span className="left">My Pantry</span><span className="right">view all</span></div>
-     <div className="row items">
-       <div className="item"></div>
-       <div className="item"></div>
-       <div className="item"></div>
-     </div>
-   </div>
-   </div>
-}
+    //decided not to include the other categories, but code for that is below
+// if(this.state.Shorten){
+//   otherSection = <div className="otherSection"><div className="publicRecipes row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">Public Recipes</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//
+//    <div className="popularRecipes row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">Popular Recipes</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//
+//    <div className="favoriteRecipes row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">My Favorite Recipes</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//
+//    <div className="myPantry row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">My Pantry</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//    </div>
+// }
 
 
     return(
     <div className="Total">
 
         <div className="myRecipes row listRow">
-          <div className="row headerPart"><span className="left">My Recipes</span><span onClick={this.handleViewall} className="right">view all</span></div>
+          <div className="col-md-12 headerPart"><span className="left">My Recipes</span><span onClick={this.handleViewall} className="right">view all</span></div>
           <div className="row items">
         {this.state.theList}
           </div>

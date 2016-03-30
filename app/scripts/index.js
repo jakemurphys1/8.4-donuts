@@ -67,3 +67,7 @@ $("#headerUser").click(function(){
 $("#SBmyRecipes").click(function(){
   router.navigate("home",{trigger:true})
 })
+
+$("#headerSetting").click(function(){
+    router.navigate("home",{trigger:true})
+})

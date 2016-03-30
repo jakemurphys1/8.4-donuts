@@ -114,11 +114,11 @@ handleAdjust:function(){
               <div key={Date.now() + count} className="col-md-6 col-md-offset-3 TotalStep">
                 <div className="row"><h3>Step {count}</h3></div>
                 <div className="row">
-                  <div className="col-md-6 ingreDescription"><span>{item}</span></div>
-                  <div className="col-md-2 ">
+                  <div className="col-md-6 col-xs-12 ingreDescription"><span>{item}</span></div>
+                  <div className="col-md-2 col-xs-6 ">
                   {ingreQty}
                   </div>
-                  <div className="col-md-4 ">
+                  <div className="col-md-4 col-xs-6">
                     {ingreName}
                   </div>
                 </div>
@@ -131,7 +131,7 @@ handleAdjust:function(){
           var ingreQty = eval(item.get("Amount")).toFixed(2).replace(/[.,]00$/, "") ;
           var ingreType = item.get("Unit");
 
-          return(<div className="col-md-3 col-xs-12"><b><p>{ingreName}:</p></b><p>{ingreQty} {ingreType} </p></div>)
+          return(<div className="col-sm-3 col-xs-6"><b><p>{ingreName}:</p></b><p>{ingreQty} {ingreType} </p></div>)
         })
 
 

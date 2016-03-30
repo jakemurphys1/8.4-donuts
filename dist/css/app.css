@@ -5809,6 +5809,9 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
+body {
+  background-color: #cdbda8; }
+
 *,
 *::before,
 *::after {
@@ -5868,8 +5871,14 @@ img {
     font-size: 30px;
     margin-left: 40%;
     margin-top: -0px; }
+    @media (max-width: 1200px) {
+      .header #superChef {
+        font-size: 20px; } }
   .header #left {
     font-style: italic; }
+    @media (max-width: 1200px) {
+      .header #left {
+        display: none; } }
   .header p, .header img {
     margin-top: 15px; }
   .header #headerUser {
@@ -5881,9 +5890,13 @@ img {
   .sideBar .row {
     text-align: center;
     padding: 30px; }
+  @media (max-width: 1200px) {
+    .sideBar {
+      display: none; } }
 
 .Total {
-  margin-top: 40px; }
+  margin-top: 40px;
+  height: 1000px; }
   .Total .listRow {
     width: 80%;
     height: 200px;
@@ -5928,21 +5941,35 @@ img {
       width: 400px;
       height: 30px;
       background-color: #dedede; }
+      @media (max-width: 768px) {
+        .Total .recipeHead .HeadInput {
+          width: 300px; } }
     .Total .recipeHead #makerImage img {
       margin-left: 100px;
       width: 300px;
       height: auto; }
+      @media (max-width: 1200px) {
+        .Total .recipeHead #makerImage img {
+          display: none; } }
 
 .info {
   margin: 0 auto; }
+  .info #Quantity {
+    width: 55px; }
   .info .inputs1 {
     width: 80px;
     margin: 5px;
     background-color: #dedede; }
+    @media (max-width: 1200px) {
+      .info .inputs1 {
+        width: 80px; } }
   .info .inputs2 {
     width: 150px;
     margin: 5px;
     background-color: #dedede; }
+    @media (max-width: 1200px) {
+      .info .inputs2 {
+        width: 80px; } }
   .info #Temptype {
     width: 40px; }
   .info #Description {

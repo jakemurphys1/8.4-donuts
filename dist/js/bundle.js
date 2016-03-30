@@ -28,7 +28,7 @@ imgUrl="images/Dessert.jpg"
 var mealImage = {
   backgroundImage: 'url(' + imgUrl + ')',
 }
-    return(React.createElement("div", {style: mealImage, onClick: this.handleReview, id: this.props.model.id, className: "item col-md-3"}, 
+    return(React.createElement("div", {style: mealImage, onClick: this.handleReview, id: this.props.model.id, className: "item col-md-3 col-sm-6 col-xs-12"}, 
     React.createElement("h2", {className: "homeName"}, this.props.model.get("RecipeName")), React.createElement("p", null, mealType)
     ))
   },
@@ -80,51 +80,53 @@ handleViewall:function(){
 },
   render:function(){
     var otherSection;
-if(this.state.Shorten){
-  otherSection = React.createElement("div", {className: "otherSection"}, React.createElement("div", {className: "publicRecipes row listRow"}, 
-     React.createElement("div", {className: "row headerPart"}, React.createElement("span", {className: "left"}, "Public Recipes"), React.createElement("span", {className: "right"}, "view all")), 
-     React.createElement("div", {className: "row items"}, 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"})
-     )
-   ), 
 
-   React.createElement("div", {className: "popularRecipes row listRow"}, 
-     React.createElement("div", {className: "row headerPart"}, React.createElement("span", {className: "left"}, "Popular Recipes"), React.createElement("span", {className: "right"}, "view all")), 
-     React.createElement("div", {className: "row items"}, 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"})
-     )
-   ), 
-
-   React.createElement("div", {className: "favoriteRecipes row listRow"}, 
-     React.createElement("div", {className: "row headerPart"}, React.createElement("span", {className: "left"}, "My Favorite Recipes"), React.createElement("span", {className: "right"}, "view all")), 
-     React.createElement("div", {className: "row items"}, 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"})
-     )
-   ), 
-
-   React.createElement("div", {className: "myPantry row listRow"}, 
-     React.createElement("div", {className: "row headerPart"}, React.createElement("span", {className: "left"}, "My Pantry"), React.createElement("span", {className: "right"}, "view all")), 
-     React.createElement("div", {className: "row items"}, 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"}), 
-       React.createElement("div", {className: "item"})
-     )
-   )
-   )
-}
+    //decided not to include the other categories, but code for that is below
+// if(this.state.Shorten){
+//   otherSection = <div className="otherSection"><div className="publicRecipes row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">Public Recipes</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//
+//    <div className="popularRecipes row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">Popular Recipes</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//
+//    <div className="favoriteRecipes row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">My Favorite Recipes</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//
+//    <div className="myPantry row listRow">
+//      <div className="col-md-12 headerPart"><span className="left">My Pantry</span><span className="right">view all</span></div>
+//      <div className="row items">
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//        <div className="item col-md-3 col-sm-6"></div>
+//      </div>
+//    </div>
+//    </div>
+// }
 
 
     return(
     React.createElement("div", {className: "Total"}, 
 
         React.createElement("div", {className: "myRecipes row listRow"}, 
-          React.createElement("div", {className: "row headerPart"}, React.createElement("span", {className: "left"}, "My Recipes"), React.createElement("span", {onClick: this.handleViewall, className: "right"}, "view all")), 
+          React.createElement("div", {className: "col-md-12 headerPart"}, React.createElement("span", {className: "left"}, "My Recipes"), React.createElement("span", {onClick: this.handleViewall, className: "right"}, "view all")), 
           React.createElement("div", {className: "row items"}, 
         this.state.theList
           )
@@ -289,7 +291,7 @@ return(
   React.createElement("div", {className: "Total"}, 
 
       React.createElement("div", {className: "row recipeHead"}, 
-        React.createElement("div", {className: "col-md-6"}, 
+        React.createElement("div", {className: "col-md-6 col-sm-12"}, 
             React.createElement("h1", null, "Basic info"), 
 
 
@@ -299,6 +301,7 @@ return(
               ), 
 
               React.createElement("div", {className: "row info"}, 
+                React.createElement("div", {className: "col-md-12"}, 
                   React.createElement("select", {id: "recipeType"}, 
                     React.createElement("option", {value: "Breakfast"}, "Breakfast"), 
                     React.createElement("option", {value: "Lunch"}, "Lunch"), 
@@ -306,20 +309,27 @@ return(
                     React.createElement("option", {value: "Dessert"}, "Dessert")
                   ), 
                   React.createElement("input", {id: "prepTime", className: "inputs1", type: "text", placeholder: "Prep Time"}), 
-                  React.createElement("input", {id: "cookTime", className: "inputs1", type: "text", placeholder: "Cook Time"}), 
+                  React.createElement("input", {id: "cookTime", className: "inputs1", type: "text", placeholder: "Cook Time"})
+                  ), 
+                React.createElement("div", {className: "col-md-12"}, 
                       React.createElement("input", {id: "cookTemp", className: "inputs1", type: "text", placeholder: "Cook Temp"}), 
                     React.createElement("select", {id: "Temptype"}, 
                       React.createElement("option", {value: "F", placeholder: "F"}, "F"), 
                       React.createElement("option", {value: "C"}, "C")
                     )
+                )
               ), 
               React.createElement("div", {className: "row info"}, 
-                React.createElement("span", null, "This recipe will make"), 
-                React.createElement("input", {id: "Quantity", className: "inputs1", type: "text", placeholder: "Amount"}), 
-                React.createElement("input", {id: "QuantityType", className: "inputs2", type: "text", placeholder: "Cookies, loaves, ect."})
+                React.createElement("div", {className: "col-sm-12"}, React.createElement("span", null, "This recipe will make:")), 
+
+                React.createElement("div", {className: "col-sm-12"}, 
+                  React.createElement("input", {id: "Quantity", className: "inputs1", type: "text", placeholder: "Amount"}), 
+                  React.createElement("input", {id: "QuantityType", className: "inputs2", type: "text", placeholder: "Cookies, loaves, ect."})
+                )
+
               )
           ), 
-          React.createElement("div", {className: "col-md-6 makerImage"}, React.createElement("div", {id: "makerImage"}, React.createElement("img", {src: "images/Chef.jpeg"})))
+          React.createElement("div", {className: "col-md-6 col-sm-0 makerImage"}, React.createElement("div", {id: "makerImage"}, React.createElement("img", {src: "images/chef.jpeg"})))
     ), 
 
 
@@ -465,11 +475,11 @@ handleAdjust:function(){
               React.createElement("div", {key: Date.now() + count, className: "col-md-6 col-md-offset-3 TotalStep"}, 
                 React.createElement("div", {className: "row"}, React.createElement("h3", null, "Step ", count)), 
                 React.createElement("div", {className: "row"}, 
-                  React.createElement("div", {className: "col-md-6 ingreDescription"}, React.createElement("span", null, item)), 
-                  React.createElement("div", {className: "col-md-2 "}, 
+                  React.createElement("div", {className: "col-md-6 col-xs-12 ingreDescription"}, React.createElement("span", null, item)), 
+                  React.createElement("div", {className: "col-md-2 col-xs-6 "}, 
                   ingreQty
                   ), 
-                  React.createElement("div", {className: "col-md-4 "}, 
+                  React.createElement("div", {className: "col-md-4 col-xs-6"}, 
                     ingreName
                   )
                 )
@@ -482,7 +492,7 @@ handleAdjust:function(){
           var ingreQty = eval(item.get("Amount")).toFixed(2).replace(/[.,]00$/, "") ;
           var ingreType = item.get("Unit");
 
-          return(React.createElement("div", {className: "col-md-3 col-xs-12"}, React.createElement("b", null, React.createElement("p", null, ingreName, ":")), React.createElement("p", null, ingreQty, " ", ingreType, " ")))
+          return(React.createElement("div", {className: "col-sm-3 col-xs-6"}, React.createElement("b", null, React.createElement("p", null, ingreName, ":")), React.createElement("p", null, ingreQty, " ", ingreType, " ")))
         })
 
 
@@ -708,6 +718,10 @@ $("#headerUser").click(function(){
 
 $("#SBmyRecipes").click(function(){
   router.navigate("home",{trigger:true})
+})
+
+$("#headerSetting").click(function(){
+    router.navigate("home",{trigger:true})
 })
 
 },{"./components/home.jsx":1,"./components/maker.jsx":2,"./components/review.jsx":3,"./components/signin.jsx":4,"./models/models.js":6,"backbone":25,"jquery":129,"parse":130,"react":317,"react-bootstrap/lib/ButtonInput":174,"react-bootstrap/lib/Input":179,"react-dom":185}],6:[function(require,module,exports){

@@ -145,7 +145,7 @@ return(
   <div className="Total">
 
       <div className="row recipeHead">
-        <div className="col-md-6">
+        <div className="col-md-6 col-sm-12">
             <h1>Basic info</h1>
 
 
@@ -155,6 +155,7 @@ return(
               </div>
 
               <div className="row info">
+                <div className="col-md-12">
                   <select id="recipeType">
                     <option value="Breakfast">Breakfast</option>
                     <option value="Lunch">Lunch</option>
@@ -163,19 +164,26 @@ return(
                   </select>
                   <input id="prepTime" className="inputs1" type="text" placeholder="Prep Time" />
                   <input id="cookTime" className="inputs1" type="text" placeholder="Cook Time" />
+                  </div>
+                <div className="col-md-12">
                       <input id="cookTemp" className="inputs1" type="text" placeholder="Cook Temp" />
                     <select id="Temptype">
                       <option value="F" placeholder="F">F</option>
                       <option value="C">C</option>
                     </select>
+                </div>
               </div>
               <div className="row info">
-                <span>This recipe will make</span>
-                <input id="Quantity" className="inputs1" type="text" placeholder="Amount" />
-                <input id="QuantityType" className="inputs2" type="text" placeholder="Cookies, loaves, ect." />
+                <div className="col-sm-12"><span>This recipe will make:</span></div>
+
+                <div className="col-sm-12">
+                  <input id="Quantity" className="inputs1" type="text" placeholder="Amount" />
+                  <input id="QuantityType" className="inputs2" type="text" placeholder="Cookies, loaves, ect." />
+                </div>
+
               </div>
           </div>
-          <div className="col-md-6 makerImage"><div id="makerImage"><img src="images/chef.jpeg" /></div></div>
+          <div className="col-md-6 col-sm-0 makerImage"><div id="makerImage"><img src="images/chef.jpeg" /></div></div>
     </div>
 
 

@@ -5,6 +5,9 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 // Import Bootstrap
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
+body{
+    background-color: rgb(205, 189, 168);
+}
 
 *,
 *::before,
@@ -15,6 +18,7 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 img {
   max-width: 100%;
 }
+
 
 #container{
     background-color: rgb(205, 189, 168);
@@ -76,9 +80,15 @@ position: absolute;
 font-size: 30px;
 margin-left:40%;
 margin-top: -0px;
+@media (max-width: 1200px) {
+font-size: 20px;
+}
   }
   #left{
      font-style: italic;
+     @media (max-width: 1200px) {
+       display:none;
+     }
   }
   p,img{
     margin-top: 15px
@@ -90,24 +100,30 @@ margin-top: -0px;
 
 .sideBar{
 
-      background-color: rgb(216, 169, 109);
+    background-color: rgb(216, 169, 109);
     height:1000px;
+
     .row{
-text-align: center;
-padding:30px;
+      text-align: center;
+      padding:30px;
+    }
+
+    @media (max-width: 1200px) {
+      display:none;
     }
 }
 
 .Total{
       margin-top: 40px;
+    height:1000px;
   .listRow{
-width:80%;
-    height:200px;
-    margin:0px auto;
-  }
+            width:80%;
+            height:200px;
+            margin:0px auto;
+          }
 .items{
-  margin-top: 10px;
-}
+        margin-top: 10px;
+      }
   .item{
       background-color:rgb(230, 230, 230);
       border:black 1px solid;
@@ -154,9 +170,15 @@ width:80%;
       width:400px;
       height:30px;
         background-color: rgb(222, 222, 222);
+        @media (max-width: 768px) {
+            width:300px;
+        }
     }
     #makerImage{
       img{
+        @media (max-width: 1200px) {
+          display:none;
+        }
         margin-left:100px;
         width:300px;
         height: auto;
@@ -169,6 +191,9 @@ width:80%;
 
 .info{
   margin:0 auto;
+  #Quantity{
+    width:55px;
+  }
 h1{
 
 }
@@ -176,11 +201,17 @@ h1{
     width:80px;
     margin: 5px;
       background-color: rgb(222, 222, 222);
+      @media (max-width: 1200px) {
+          width:80px;
+      }
   }
   .inputs2{
     width:150px;
     margin: 5px;
       background-color: rgb(222, 222, 222);
+      @media (max-width: 1200px) {
+          width:80px;
+      }
   }
   #Temptype{
     width:40px;
