@@ -26,6 +26,9 @@ imgUrl="images/Dessert.jpg"
 var mealImage = {
   backgroundImage: 'url(' + imgUrl + ')',
 }
+if(){
+
+}
     return(<div style={mealImage} onClick={this.handleReview} id={this.props.model.id} className="item col-md-3 col-sm-6 col-xs-12">
     <h2 className="homeName" >{this.props.model.get("RecipeName")}</h2><p>{mealType}</p>
     </div>)
@@ -42,7 +45,7 @@ var Home = React.createClass({
   },
   startFunction:function(){
     Parse.initialize("jakeappid");
-    Parse.serverURL = 'http://tiny-jakes.herokuapp.com'
+    Parse.serverURL = 'http://tiny-jakes2.herokuapp.com'
 
     var recipe = Parse.Object.extend("Recipes");
       var query = new Parse.Query(recipe);
